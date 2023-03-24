@@ -5,13 +5,13 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import com.dkit.oop.sd2.Exceptions.DaoException;
+import Exception.DaoException;
 
 public class MySqlDao {
     public Connection getConnection() throws DaoException
     {
         String driver = "com.mysql.cj.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/user_database";
+        String url = "jdbc:mysql://localhost:3306/java_project";
         String username = "root";
         String password = "";
         Connection connection = null;
