@@ -2,10 +2,8 @@ package DAO;
 
 import DTO.Airport;
 import Exception.DaoException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,6 +161,54 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
                 throw new DaoException("findAirportById () " + e.getMessage());
             }
         }
+        return a;
+    }
+
+
+    public Airport InsertAirport (Airport a) throws DaoException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int change = 0;
+        ResultSet rs = null;
+        try
+        {
+            connection = this.getConnection();
+            String query = "insert into airports values(NULL,?,?,?);";
+            //code form https://docs.oracle.com/
+            ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,a.getAirport_short_form());
+            ps.setString(1,a.getAirport_city());
+            ps.setString(1,a.getAirport_country());
+            change = ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            a.setAirport_id(rs.getInt(1)) ;
+
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("deleteById() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if (rs != null)
+                {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("Inseret" + e.getMessage());
+            }
+        }
+
         return a;
     }
 }

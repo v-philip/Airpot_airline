@@ -10,5 +10,6 @@ public interface AirportDaoInterface {
     public int deleteById (int id) throws DaoException;
 
     public Airport findById(int id)throws DaoException;
+    public Airport InsertAirport(Airport a)throws DaoException;
 
 }
