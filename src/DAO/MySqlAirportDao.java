@@ -69,15 +69,16 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
     }
 
     @Override
-    public int deleteById() throws DaoException {
+    public int deleteById(int id) throws DaoException {
         Connection connection = null;
         PreparedStatement ps = null;
         int updated = 0;
         try
         {
             connection = this.getConnection();
-            String query = "SELECT * FROM Airport";
+            String query = "DELETE FROM Airport WHERE airportId = ?";
             ps = connection.prepareStatement(query);
+            ps.setString(1,Integer.toString(id));
 
             updated = ps.executeUpdate();
 
@@ -105,5 +106,63 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         }
 
         return updated;
+    }
+
+    @Override
+    public Airport findById(int id ) throws DaoException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Airport a = null;
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "SELECT * FROM Airport WHERE airport_id = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1,Integer.toString(id));
+
+            //Using a PreparedStatement to execute SQL...
+            rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+
+                int airport_id = rs.getInt("airport_id");
+                String airport_short_form = rs.getString("airport_short_form");
+                String airport_city = rs.getString("airport_city");
+                String airport_country = rs.getString("airport_country");
+                a = new Airport(airport_id, airport_short_form, airport_city, airport_country);
+
+            }
+
+        }
+        catch(SQLException e)
+        {
+            throw new DaoException("findAllSet() " + e.getMessage());
+        }
+
+        finally
+        {
+            try
+            {
+                if (rs != null)
+                {
+                    rs.close();
+                }
+                if (ps != null)
+                {
+                    ps.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("findAirportById () " + e.getMessage());
+            }
+        }
+        return a;
     }
 }
