@@ -7,6 +7,6 @@ import java.util.List;
 public interface AirportDaoInterface {
     public List<Airport> FindAllAirports() throws DaoException;
 
-//    public Airport () throws DaoException;
+    public int deleteById () throws DaoException;
 
 }
