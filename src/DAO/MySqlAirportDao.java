@@ -24,7 +24,7 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
             //Get connection object using the methods in the super class (MySqlDao.java)...
             connection = this.getConnection();
 
-            String query = "SELECT * FROM Airport";
+            String query = "SELECT * FROM Airports";
             ps = connection.prepareStatement(query);
 
             //Using a PreparedStatement to execute SQL...
@@ -74,7 +74,7 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         try
         {
             connection = this.getConnection();
-            String query = "DELETE FROM Airport WHERE airportId = ?";
+            String query = "DELETE FROM Airports WHERE airport_id = ?";
             ps = connection.prepareStatement(query);
             ps.setString(1,Integer.toString(id));
 
@@ -116,7 +116,7 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         {
             connection = this.getConnection();
 
-            String query = "SELECT * FROM Airport WHERE airport_id = ?";
+            String query = "SELECT * FROM Airports WHERE airport_id = ?";
             ps = connection.prepareStatement(query);
             ps.setString(1,Integer.toString(id));
 
@@ -173,15 +173,27 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         try
         {
             connection = this.getConnection();
-            String query = "insert into airports values(NULL,?,?,?);";
+            String query = "insert into airports (airport_id, airport_short_form, airport_city, airport_country) values(NULL,?,?,?);";
             //code form https://docs.oracle.com/
             ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,a.getAirport_short_form());
-            ps.setString(1,a.getAirport_city());
-            ps.setString(1,a.getAirport_country());
+            ps.setString(2,a.getAirport_city());
+            ps.setString(3,a.getAirport_country());
             change = ps.executeUpdate();
-            rs = ps.getGeneratedKeys();
-            a.setAirport_id(rs.getInt(1)) ;
+
+//            try (ResultSet keys = ps.getGeneratedKeys()) {
+//                ps(keys.next()).isTrue();
+//                ps(keys.getLong(1)).isGreaterThanOrEqualTo(1);
+//            }
+            if (change !=0){
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    a.setAirport_id(generatedKeys.getInt(1));
+                }
+            }
+            }
+//            rs = ps.getGeneratedKeys();
+//            a.setAirport_id(rs.getInt(1)) ;
 
         }
         catch (SQLException e)

@@ -1,6 +1,11 @@
 
 import java.sql.*;
+import java.util.List;
 
+import DAO.AirportDaoInterface;
+import DAO.MySqlAirportDao;
+import DTO.Airport;
+import Exception.DaoException;
 public class App {
     public static void main(String[] args) {
 
@@ -10,23 +15,34 @@ public class App {
     }
 
     public void start(){
-        String url = "jdbc:mysql://localhost/";
-        String dbName = "test";
-        String userName = "root";   // default
-        String password = "";
-        try ( Connection conn =
-                      DriverManager.getConnection(url + dbName, userName, password) )
-        {
-            System.out.println("SUCCESS ! - Your program has successfully connected to the MySql Database Server. Well done.");
-            System.out.println("... we could query the database using the SQL commands you learned in DBMS...");
-            System.out.println("... but for now, we will simply close the connection.");
+        AirportDaoInterface IAirportDao = new MySqlAirportDao();
 
-            System.out.println("Your program is disconnecting from the database - goodbye.");
+        try{
+
+            System.out.println("\nCall findAllAirport()");
+            List<Airport> airports = IAirportDao.FindAllAirports();
+            for (Airport airport : airports)
+                System.out.println("Airport: " + airports.toString());
+
+            System.out.println("\nCall: findById()");
+            int id = 2;
+            Airport airport = IAirportDao.findById(id);
+            System.out.println("Airport found \n"+ airport);
+
+//            System.out.println("\nCall: deleteById()");
+//            int i = IAirportDao.deleteById(id);
+
+            System.out.println("\n call: InsertAirport(a)");
+            Airport airport1 = new Airport ("tes","test","Test");
+            Airport airport2 = IAirportDao.InsertAirport(airport1);
+            System.out.println(airport2);
+
+
         }
-        catch (SQLException ex)
-        {
-            System.out.println("Failed to connect to database - check that you have started the MySQL from XAMPP, and that your connection details are correct.");
-            ex.printStackTrace();
+
+
+        catch(DaoException e) {
+            e.printStackTrace();
         }
     }
 }
