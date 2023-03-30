@@ -5,12 +5,14 @@ import Exception.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
 public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
 {
 
+    HashSet<Integer> airportIDs= new HashSet<Integer>();
     @Override
     public List<Airport> FindAllAirports() throws DaoException
     {
@@ -31,13 +33,14 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
             resultSet = ps.executeQuery();
             while (resultSet.next())
             {
-
                 int airport_id = resultSet.getInt("airport_id");
+                airportIDs.add(airport_id);
                 String airport_short_form = resultSet.getString("airport_short_form");
                 String airport_city = resultSet.getString("airport_city");
                 String airport_country = resultSet.getString("airport_country");
                 Airport a = new Airport(airport_id, airport_short_form, airport_city, airport_country);
                 airportList.add(a);
+
             }
         } catch (SQLException e)
         {

@@ -1,6 +1,8 @@
 package DTO;
 
-public class Airport
+import java.util.Objects;
+
+public class Airport implements Comparable<Airport>
 {
     private int airport_id ;
     private String airport_short_form;
@@ -75,5 +77,24 @@ public class Airport
         return "Airport{" + "Airport Id=" + airport_id + ", airport_short_form=" + airport_short_form + ", airport_city=" +
                 airport_city + ", airport_country=" + airport_country +'}';
     }
+
+    @Override
+    public  int compareTo(Airport aAirport) {
+        return this.getAirport_country().compareTo(aAirport.getAirport_country());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Airport a = (Airport) o;
+        return airport_country == a.airport_country;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(airport_country);
+    }
+
 
 }

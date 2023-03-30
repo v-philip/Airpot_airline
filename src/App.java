@@ -22,7 +22,7 @@ public class App {
             System.out.println("\nCall findAllAirport()");
             List<Airport> airports = IAirportDao.FindAllAirports();
             for (Airport airport : airports)
-                System.out.println("Airport: " + airports.toString());
+                System.out.println("Airport: " + airport.toString());
 
             System.out.println("\nCall: findById()");
             int id = 2;
@@ -36,7 +36,6 @@ public class App {
             Airport airport1 = new Airport ("tes","test","Test");
             Airport airport2 = IAirportDao.InsertAirport(airport1);
             System.out.println(airport2);
-
 
         }
 
