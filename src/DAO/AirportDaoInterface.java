@@ -11,5 +11,6 @@ public interface AirportDaoInterface {
 
     public Airport findById(int id)throws DaoException;
     public Airport InsertAirport(Airport a)throws DaoException;
+    public List<Airport> filterByCountry(List<Airport>a, String country  )throws DaoException;
 
 }

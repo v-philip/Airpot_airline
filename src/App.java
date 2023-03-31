@@ -31,11 +31,19 @@ public class App {
 
 //            System.out.println("\nCall: deleteById()");
 //            int i = IAirportDao.deleteById(id);
+            System.out.println("\nCall: filetr()");
+            String country = "USA";
+            List<Airport> airport2 = IAirportDao.filterByCountry(IAirportDao.FindAllAirports(),country);
+            System.out.println("Airport found \n"+ airport);
+            for(Airport res : airport2) {
+                System.out.println(res);
+            }
 
-            System.out.println("\n call: InsertAirport(a)");
-            Airport airport1 = new Airport ("tes","test","Test");
-            Airport airport2 = IAirportDao.InsertAirport(airport1);
-            System.out.println(airport2);
+
+//            System.out.println("\n call: InsertAirport(a)");
+//            Airport airport1 = new Airport ("tes","test","Test");
+//            Airport airport3 = IAirportDao.InsertAirport(airport1);
+//            System.out.println(airport3);
 
         }
 

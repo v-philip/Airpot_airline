@@ -71,6 +71,7 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
 
     @Override
     public int deleteById(int id) throws DaoException {
+
         Connection connection = null;
         PreparedStatement ps = null;
         int updated = 0;
@@ -225,5 +226,21 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         }
 
         return a;
+    }
+
+    @Override
+//function to filter by country
+    public List<Airport> filterByCountry(List<Airport> a, String country){
+
+        List<Airport>result = new ArrayList<>();
+        for(Airport res : a)
+        {
+            if (country.compareTo(res.getAirport_country())==0){
+                result.add(res);
+            }
+        }
+
+
+        return result;
     }
 }
