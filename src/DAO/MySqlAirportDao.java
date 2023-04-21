@@ -262,4 +262,14 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         Gson gsonParser = new Gson();
         return gsonParser.toJson(airportList);
     }
+    @Override
+    public String FindAirportIdsJson(int id) throws DaoException
+    {
+        Airport airport =findById(id);
+
+        if(airport == null ) return null;
+
+        Gson gsonParser = new Gson();
+        return gsonParser.toJson(airport);
+    }
 }

@@ -45,7 +45,10 @@ public class App {
             System.out.println("\nCall: findById()");
 
             String str = IAirportDao.FindAllAirportsJson();
-            System.out.println("Airport found \n"+str);
+            System.out.println(str);
+            String str2 = IAirportDao.FindAirportIdsJson(2);
+            System.out.println("Aiport found : " +str2);
+
 
 
 //            System.out.println("\n call: InsertAirport(a)");
