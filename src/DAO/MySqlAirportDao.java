@@ -7,6 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
@@ -242,5 +244,22 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
 
 
         return result;
+    }
+
+    /**
+     * Gets all the recipes in the database in JSON String format.
+     *
+     * @return A JSON String containing all the recipes in the database
+     * @throws DaoException Extends SQLException
+     */
+    @Override
+    public String FindAllAirportsJson() throws DaoException
+    {
+        List<Airport> airportList = FindAllAirports();
+
+        if(airportList == null || airportList.isEmpty()) return null;
+
+        Gson gsonParser = new Gson();
+        return gsonParser.toJson(airportList);
     }
 }

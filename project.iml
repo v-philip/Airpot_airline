@@ -11,6 +11,16 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/mysql-connector-j-8.0.32.jar!/" />
+          <root url="$USER_HOME$/Downloads/jar_files" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/jar_files/gson-2.8.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
