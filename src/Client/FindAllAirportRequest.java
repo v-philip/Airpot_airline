@@ -34,10 +34,10 @@ public class FindAllAirportRequest implements Request{
             return;
         }
 
-        Type recipeListType = new TypeToken<ArrayList<Airport>>(){}.getType();
-        List<Airport> airports = gsonParser.fromJson(responsePayload, recipeListType);
+        Type airportListType = new TypeToken<ArrayList<Airport>>(){}.getType();
+        List<Airport> airports = gsonParser.fromJson(responsePayload, airportListType);
 
-        System.out.println("Displaying All Recipes");
+        System.out.println("Displaying All Airport");
         for(Airport airport : airports)
         {
             System.out.println(airport);

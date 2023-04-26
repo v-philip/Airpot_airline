@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.PrintWriter;
+import input.InputHandler;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,12 @@ public class FindById implements Request{
     @Override
     public void handelRequest(Packet requestPacket, Packet responsePacket, PrintWriter writer, Scanner input, Gson gsonParser){
         {
-            requestPacket.setPayload("");
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter the id of the airport that you want to Search for \n");
+
+            String payload =sc.nextLine();
+            requestPacket.setPayload(payload);
+
             writer.println(requestPacket.writeToJSON());
             writer.flush();
 

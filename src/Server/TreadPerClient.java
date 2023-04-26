@@ -35,25 +35,27 @@ public class TreadPerClient implements Runnable{
 
             while(!incomingPacket.getRequestType().equals(ClientMenu.EXIT))
             {
-                incomingPacket.readFromJSON(input.next());
-                System.out.println(incomingPacket);
-                String resposne = IAirportDao.FindAllAirportsJson();
-                Packet responsePacket= new Packet();
+                incomingPacket.readFromJSON(input.nextLine());
+                System.out.println("\nReceived message: \n" + incomingPacket);
 
-                responsePacket.setPayload(resposne.toString());
-                writer.println(responsePacket.getPayload());
-                writer.flush();
+                CommandFactory factory = new CommandFactory();
 
+                Command command = factory.createCommand(incomingPacket.getRequestType());
+                Packet responsePacket = null;
 
-                writer.println(incomingPacket);
+                if(command != null)
+                {
+                    responsePacket = command.createResponse(incomingPacket);
+                }
+                else continue;
+
+                writer.println(responsePacket.writeToJSON());
                 writer.flush();
             }
         }
         catch(IOException ioe)
         {
             System.out.println(ioe.getMessage());
-        } catch ( DaoException e) {
-            throw new RuntimeException(e);
         }
     }
 }
