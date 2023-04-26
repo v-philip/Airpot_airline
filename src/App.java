@@ -1,11 +1,15 @@
 
+import java.lang.reflect.Type;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import DAO.AirportDaoInterface;
 import DAO.MySqlAirportDao;
 import DTO.Airport;
 import Exception.DaoException;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class App {
     public static void main(String[] args) {
@@ -46,6 +50,8 @@ public class App {
 
             String str = IAirportDao.FindAllAirportsJson();
             System.out.println(str);
+            Gson gson = new Gson();
+            Type listAirport = new TypeToken<ArrayList<Airport>>(){}.getType();
             String str2 = IAirportDao.FindAirportIdsJson(2);
             System.out.println("Aiport found : " +str2);
 

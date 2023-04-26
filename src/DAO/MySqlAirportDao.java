@@ -242,7 +242,6 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
             }
         }
 
-
         return result;
     }
 
