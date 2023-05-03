@@ -1,4 +1,6 @@
 package Client;
+import Server.SortArrivalCommand;
+
 import  static Core.Menu.*;
 public class RequestFactory {
     public RequestFactory()
@@ -18,19 +20,25 @@ public class RequestFactory {
                 request = new FindById();
                 break;
             case FILTER_AIRPORT:
-
+                request = new FilterAirportRequest();
                 break;
-//            case DELETE_RECIPE_BY_NAME:
-//                request = new DeleteRecipeRequest();
-//                break;
-//            case SORT_RECIPES:
-//                request = new SortRecipesRequest();
-//                break;
-//            case FILTER_RECIPES:
-//                request = new FilterRecipesRequest();
-//                break;
+            case INSERT_AIRPORT:
+                request = new InsertAirportRequest();
+                break;
+            case FIND_ALL_ARRIVAL:
+            request = new FindAllArrivalRequest();
+            break;
+            case DELETE_BY_ID:
+                request = new DeleteArrivalRequest();
+                break;
+            case VIEW_ARRIVAL_SORTED:
+                request = new SortArrivalRequest();
+                break;
+            case ARRIVING_FROM:
+                request = new ArrivingFromRequest();
             default:
                 break;
+
         }
 
         return request;

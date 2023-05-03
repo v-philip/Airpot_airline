@@ -68,6 +68,7 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
                 throw new DaoException("findAllUsers() " + e.getMessage());
             }
         }
+
         return airportList;     //Did not test yet
     }
 
@@ -170,7 +171,7 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         return a;
     }
 
-
+    @Override
     public Airport InsertAirport (Airport a) throws DaoException {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -245,6 +246,22 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
         return result;
     }
 
+    @Override
+//function to filter by country
+    public List<Airport> filterByCountry( String country) throws DaoException {
+        List<Airport> a = FindAllAirports();
+
+        List<Airport>result = new ArrayList<>();
+        for(Airport res : a)
+        {
+            if (country.compareTo(res.getAirport_country())==0){
+                result.add(res);
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Gets all the recipes in the database in JSON String format.
      *
@@ -270,5 +287,17 @@ public class MySqlAirportDao extends MySqlDao implements AirportDaoInterface
 
         Gson gsonParser = new Gson();
         return gsonParser.toJson(airport);
+    }
+
+    @Override
+    public String filterByCountryJson(String country)throws DaoException
+    {
+
+        List<Airport>  a = filterByCountry(country);
+        if(a == null ) return null;
+
+        Gson gsonParser = new Gson();
+        return gsonParser.toJson(a);
+
     }
 }

@@ -2,18 +2,18 @@ package Client;
 
 import Core.Packet;
 import DTO.Airport;
+import DTO.Arrival;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class FindAllAirportRequest implements Request{
-    public FindAllAirportRequest(){
+public class FindAllArrivalRequest implements Request{
+    public FindAllArrivalRequest(){
 
     }
 
@@ -23,8 +23,6 @@ public class FindAllAirportRequest implements Request{
         requestPacket.setPayload("");
         writer.println(requestPacket.writeToJSON());
         writer.flush();
-
-        Client c = new Client();
 
         String responseJSON = input.nextLine();
         responsePacket.readFromJSON(responseJSON);
@@ -36,25 +34,15 @@ public class FindAllAirportRequest implements Request{
             return;
         }
 
-        Type airportListType = new TypeToken<ArrayList<Airport>>(){}.getType();
-        List<Airport> airports = gsonParser.fromJson(responsePayload, airportListType);
+        Type arrivalListType = new TypeToken<ArrayList<Arrival>>(){}.getType();
+        List<Arrival> a = gsonParser.fromJson(responsePayload, arrivalListType);
 
         System.out.println("Displaying All Airport");
-        for(Airport airport : airports)
+        for(Arrival ar : a)
         {
-            System.out.println(airport);
+            System.out.println(ar);
             System.out.println();
         }
-
-        if (!Client.flag)
-        {
-        for(Airport airport : airports)
-        {
-            c.updateHashSet(airport.getAirport_id());
-        }
-        }
-
-        c.setFlag( true);
 
     }
 }

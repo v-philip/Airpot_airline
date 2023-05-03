@@ -16,7 +16,24 @@ public class CommandFactory {
             case FIND_BY_ID:
                 c = new FindAirportByIdCommand();
                 break;
-
+            case FILTER_AIRPORT:
+                c = new FilterAirportCommand();
+                break;
+            case INSERT_AIRPORT:
+                c= new InsertAirportCommand() ;
+                break;
+            case FIND_ALL_ARRIVAL:
+                c= new FindAllArrivalCommand();
+                break;
+            case DELETE_BY_ID:
+                c = new DeleteArrivalCommand();
+                break;
+            case VIEW_ARRIVAL_SORTED:
+                c= new  SortArrivalCommand();
+                break;
+            case ARRIVING_FROM:
+                c= new ArrivingFromCommand();
+                break;
         }
 
         return c;
